@@ -46,7 +46,7 @@ func New(env string, log *slog.Logger, h *handler.Handler) *Server {
 		{
 			lectures.GET("/", h.Lectures.GetAll)
 			lectures.GET("/:id", h.Lectures.GetById)
-			lectures.GET("/materials", h.Lectures.GetAllMaterials)
+			lectures.GET("/:id/materials", h.Lectures.GetAllMaterials)
 		}
 		quizzes := api.Group("/quizzes")
 		{
