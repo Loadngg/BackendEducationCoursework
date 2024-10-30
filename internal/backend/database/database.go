@@ -7,6 +7,7 @@ import (
 
 type Authorization interface {
 	CreateUser(user models.Users) (int32, error)
+	GetUser(login, password string) (models.Users, error)
 }
 
 type Lectures interface {

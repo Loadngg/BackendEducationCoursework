@@ -20,3 +20,9 @@ func (a *AuthPostgres) CreateUser(user models.Users) (int32, error) {
 
 	return user.ID, nil
 }
+
+func (a *AuthPostgres) GetUser(login, password string) (models.Users, error) {
+	var user models.Users
+	err := a.db.SelectOneTo(&user, "WHERE login=$1 AND password=$2", login, password)
+	return user, err
+}

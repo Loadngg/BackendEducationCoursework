@@ -7,6 +7,7 @@ import (
 
 type Authorization interface {
 	CreateUser(user models.Users) (int32, error)
+	GenerateToken(login, password string) (string, error)
 }
 
 type Lectures interface {
@@ -21,8 +22,8 @@ type Service struct {
 	Quiz
 }
 
-func New(db *database.Database, salt string) *Service {
+func New(db *database.Database, salt string, signingKey string) *Service {
 	return &Service{
-		Authorization: NewAuthService(db.Authorization, salt),
+		Authorization: NewAuthService(db.Authorization, salt, signingKey),
 	}
 }

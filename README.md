@@ -26,12 +26,13 @@ database.
 
 ```yaml
 env: "local"
+salt: long-long-string
+signing_key: long-long-string
 server:
   address: localhost:5000
   timeout: 4s
   idle_timeout: 60s
 db:
-  salt: long-long-string
   host: 127.0.0.1
   port: port
   user: user

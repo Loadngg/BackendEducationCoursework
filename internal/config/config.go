@@ -7,9 +7,11 @@ import (
 )
 
 type Config struct {
-	Env    string `yaml:"env" env-default:"local"`
-	Server `yaml:"server"`
-	Db     `yaml:"db"`
+	Env        string `yaml:"env" env-default:"local"`
+	Salt       string `yaml:"salt" env-default:"your-secret-salt"`
+	SigningKey string `yaml:"signing_key" env-default:"your-signing-key"`
+	Server     `yaml:"server"`
+	Db         `yaml:"db"`
 }
 
 type Server struct {
@@ -19,7 +21,6 @@ type Server struct {
 }
 
 type Db struct {
-	Salt     string `yaml:"salt" env-default:"your-secret-salt"`
 	Host     string `yaml:"host" env-default:"localhost"`
 	Port     int    `yaml:"port" env-default:"5432"`
 	User     string `yaml:"user" env-default:"postgres"`
