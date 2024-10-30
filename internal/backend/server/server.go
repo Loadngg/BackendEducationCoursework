@@ -20,7 +20,7 @@ type Server struct {
 	gin *gin.Engine
 }
 
-func New(env string, log *slog.Logger, handler *handler.Handler) *Server {
+func New(env string, log *slog.Logger, h *handler.Handler) *Server {
 	s := &Server{}
 
 	switch env {
@@ -34,9 +34,10 @@ func New(env string, log *slog.Logger, handler *handler.Handler) *Server {
 	s.gin.Use(logger.New(log))
 	s.gin.Use(gin.Recovery())
 
-	api := s.gin.Group("/api")
+	auth := s.gin.Group("/auth")
 	{
-		api.GET("/hello", handler.Hello)
+		auth.POST("/sign-up", h.SignUp)
+		auth.POST("/sign-in", h.SignIn)
 	}
 
 	return s

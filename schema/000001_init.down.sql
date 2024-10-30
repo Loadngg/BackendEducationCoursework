@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS lecture_materials;
+DROP TABLE IF EXISTS lectures;
+DROP TABLE IF EXISTS answers;
+DROP TABLE IF EXISTS quiz_questions;
+DROP TABLE IF EXISTS user_quiz;
+DROP TABLE IF EXISTS quiz;
+DROP TABLE IF EXISTS users;
