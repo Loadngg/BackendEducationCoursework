@@ -5,9 +5,9 @@ import (
 	"net/http"
 
 	"backend/internal/backend/handler"
-	"backend/internal/backend/middleware/logger"
 	"backend/internal/config"
 	"github.com/gin-gonic/gin"
+	sloggin "github.com/samber/slog-gin"
 )
 
 const (
@@ -31,7 +31,7 @@ func New(env string, log *slog.Logger, h *handler.Handler) *Server {
 	}
 	s.gin = gin.New()
 
-	s.gin.Use(logger.New(log))
+	s.gin.Use(sloggin.New(log))
 	s.gin.Use(gin.Recovery())
 
 	auth := s.gin.Group("/auth")
@@ -39,6 +39,8 @@ func New(env string, log *slog.Logger, h *handler.Handler) *Server {
 		auth.POST("/sign-up", h.SignUp)
 		auth.POST("/sign-in", h.SignIn)
 	}
+
+	s.gin.Group("/api", h.UserIdentity)
 
 	return s
 }
