@@ -41,6 +41,15 @@ CREATE TABLE answers
     question_id INTEGER REFERENCES quiz_questions (id)
 );
 
+CREATE TABLE user_answers
+(
+    id          SERIAL PRIMARY KEY,
+    user_id     INTEGER REFERENCES users (id),
+    question_id INTEGER REFERENCES quiz_questions (id),
+    answer_id   INTEGER REFERENCES answers (id),
+    is_correct  BOOLEAN NOT NULL
+);
+
 CREATE TABLE user_quiz
 (
     id      SERIAL PRIMARY KEY,

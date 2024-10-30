@@ -40,7 +40,26 @@ func New(env string, log *slog.Logger, h *handler.Handler) *Server {
 		auth.POST("/sign-in", h.SignIn)
 	}
 
-	s.gin.Group("/api", h.UserIdentity)
+	api := s.gin.Group("/api", h.UserIdentity)
+	{
+		lectures := api.Group("/lectures")
+		{
+			lectures.GET("/")
+			lectures.GET("/:id")
+			lectures.GET("/:id/materials/:material_id")
+		}
+		quizzes := api.Group("/quizzes")
+		{
+			quizzes.GET("/")
+			quizzes.GET("/:id")
+			questions := quizzes.Group("/:id/questions")
+			{
+				questions.GET("/:question_id")
+				questions.POST("/:question_id/answers/")
+			}
+		}
+		api.GET("/results/:user_id")
+	}
 
 	return s
 }
