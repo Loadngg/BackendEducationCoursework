@@ -38,7 +38,7 @@ func New(log *slog.Logger, cfg *config.Config) (*App, error) {
 	}
 
 	app.database = database.New(db)
-	app.service = service.New(app.database)
+	app.service = service.New(app.database, cfg.Salt)
 	app.handler = handler.New(log, app.service)
 	app.server = server.New(cfg.Env, log, app.handler)
 

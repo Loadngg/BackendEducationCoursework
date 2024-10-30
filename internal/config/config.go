@@ -19,6 +19,7 @@ type Server struct {
 }
 
 type Db struct {
+	Salt     string `yaml:"salt" env-default:"your-secret-salt"`
 	Host     string `yaml:"host" env-default:"localhost"`
 	Port     int    `yaml:"port" env-default:"5432"`
 	User     string `yaml:"user" env-default:"postgres"`

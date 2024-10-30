@@ -31,6 +31,7 @@ server:
   timeout: 4s
   idle_timeout: 60s
 db:
+  salt: long-long-string
   host: 127.0.0.1
   port: port
   user: user

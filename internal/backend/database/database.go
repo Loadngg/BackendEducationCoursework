@@ -1,8 +1,12 @@
 package database
 
-import "gopkg.in/reform.v1"
+import (
+	"backend/internal/backend/models"
+	"gopkg.in/reform.v1"
+)
 
 type Authorization interface {
+	CreateUser(user models.Users) (int32, error)
 }
 
 type Lectures interface {
@@ -18,5 +22,7 @@ type Database struct {
 }
 
 func New(db *reform.DB) *Database {
-	return &Database{}
+	return &Database{
+		Authorization: NewAuthPostgres(db),
+	}
 }

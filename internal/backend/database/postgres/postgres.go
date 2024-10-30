@@ -23,13 +23,13 @@ type Config struct {
 
 func New(cfg Config) (*reform.DB, error) {
 	connStr := fmt.Sprintf(
-		"sslmode=%s host=%s port=%v user=%s password=%s dbname=%s",
-		cfg.SSL,
-		cfg.Host,
-		cfg.Port,
+		"postgres://%s:%s@%s:%v/%s?sslmode=%s",
 		cfg.Username,
 		cfg.Password,
+		cfg.Host,
+		cfg.Port,
 		cfg.Database,
+		cfg.SSL,
 	)
 
 	sqlDB, err := sql.Open("postgres", connStr)
