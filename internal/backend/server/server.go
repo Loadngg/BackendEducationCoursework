@@ -36,17 +36,17 @@ func New(env string, log *slog.Logger, h *handler.Handler) *Server {
 
 	auth := s.gin.Group("/auth")
 	{
-		auth.POST("/sign-up", h.SignUp)
-		auth.POST("/sign-in", h.SignIn)
+		auth.POST("/sign-up", h.Authorization.SignUp)
+		auth.POST("/sign-in", h.Authorization.SignIn)
 	}
 
-	api := s.gin.Group("/api", h.UserIdentity)
+	api := s.gin.Group("/api", h.Middleware.UserIdentity)
 	{
 		lectures := api.Group("/lectures")
 		{
-			lectures.GET("/")
-			lectures.GET("/:id")
-			lectures.GET("/:id/materials/:material_id")
+			lectures.GET("/", h.Lectures.GetAll)
+			lectures.GET("/:id", h.Lectures.GetById)
+			lectures.GET("/materials", h.Lectures.GetAllMaterials)
 		}
 		quizzes := api.Group("/quizzes")
 		{
@@ -55,10 +55,10 @@ func New(env string, log *slog.Logger, h *handler.Handler) *Server {
 			questions := quizzes.Group("/:id/questions")
 			{
 				questions.GET("/:question_id")
-				questions.POST("/:question_id/answers/")
+				questions.POST("/:question_id/answers")
 			}
 		}
-		api.GET("/results/:user_id")
+		api.GET("/results")
 	}
 
 	return s

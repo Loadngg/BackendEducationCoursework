@@ -16,7 +16,7 @@ CREATE TABLE lecture_materials
 (
     id         SERIAL PRIMARY KEY,
     title      VARCHAR(255) NOT NULL UNIQUE,
-    file       BYTEA        NOT NULL,
+    file_link       VARCHAR(255) NOT NULL,
     lecture_id INTEGER REFERENCES lectures (id)
 );
 

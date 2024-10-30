@@ -8,6 +8,6 @@ package models
 type LectureMaterials struct {
 	ID        int32  `reform:"id,pk" json:"id"`
 	Title     string `reform:"title" json:"title"`
-	File      []byte `reform:"file" json:"file"`
+	FileLink  string `reform:"file_link" json:"file"`
 	LectureID *int32 `reform:"lecture_id" json:"lecture_id"`
 }

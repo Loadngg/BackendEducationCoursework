@@ -1,13 +1,27 @@
 package handler
 
 import (
+	"log/slog"
 	"net/http"
 
 	"backend/internal/backend/models"
+	"backend/internal/backend/service"
 	"github.com/gin-gonic/gin"
 )
 
-func (h *Handler) SignUp(c *gin.Context) {
+type AuthorizationHandler struct {
+	log     *slog.Logger
+	service service.Authorization
+}
+
+func NewAuthorizationHandler(service service.Authorization, log *slog.Logger) *AuthorizationHandler {
+	return &AuthorizationHandler{
+		service: service,
+		log:     log,
+	}
+}
+
+func (h *AuthorizationHandler) SignUp(c *gin.Context) {
 	var input models.Users
 
 	if err := c.BindJSON(&input); err != nil {
@@ -31,7 +45,7 @@ type signInInput struct {
 	Password string `json:"password" binding:"required"`
 }
 
-func (h *Handler) SignIn(c *gin.Context) {
+func (h *AuthorizationHandler) SignIn(c *gin.Context) {
 	var input signInInput
 
 	if err := c.BindJSON(&input); err != nil {

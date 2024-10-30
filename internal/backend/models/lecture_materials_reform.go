@@ -30,7 +30,7 @@ func (v *lectureMaterialsTableType) Columns() []string {
 	return []string{
 		"id",
 		"title",
-		"file",
+		"file_link",
 		"lecture_id",
 	}
 }
@@ -58,7 +58,7 @@ var LectureMaterialsTable = &lectureMaterialsTableType{
 		Fields: []parse.FieldInfo{
 			{Name: "ID", Type: "int32", Column: "id"},
 			{Name: "Title", Type: "string", Column: "title"},
-			{Name: "File", Type: "[]uint8", Column: "file"},
+			{Name: "FileLink", Type: "string", Column: "file_link"},
 			{Name: "LectureID", Type: "*int32", Column: "lecture_id"},
 		},
 		PKFieldIndex: 0,
@@ -71,7 +71,7 @@ func (s LectureMaterials) String() string {
 	res := make([]string, 4)
 	res[0] = "ID: " + reform.Inspect(s.ID, true)
 	res[1] = "Title: " + reform.Inspect(s.Title, true)
-	res[2] = "File: " + reform.Inspect(s.File, true)
+	res[2] = "FileLink: " + reform.Inspect(s.FileLink, true)
 	res[3] = "LectureID: " + reform.Inspect(s.LectureID, true)
 	return strings.Join(res, ", ")
 }
@@ -82,7 +82,7 @@ func (s *LectureMaterials) Values() []interface{} {
 	return []interface{}{
 		s.ID,
 		s.Title,
-		s.File,
+		s.FileLink,
 		s.LectureID,
 	}
 }
@@ -93,7 +93,7 @@ func (s *LectureMaterials) Pointers() []interface{} {
 	return []interface{}{
 		&s.ID,
 		&s.Title,
-		&s.File,
+		&s.FileLink,
 		&s.LectureID,
 	}
 }
