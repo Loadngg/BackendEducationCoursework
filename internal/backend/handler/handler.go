@@ -22,17 +22,24 @@ type Lectures interface {
 	GetAllMaterials(c *gin.Context)
 }
 
-type Quiz interface {
+type Quizzes interface {
+	GetAll(c *gin.Context)
+	GetById(c *gin.Context)
+	GetAllQuestions(c *gin.Context)
+	GetQuestionById(c *gin.Context)
+	GetAllAnswers(c *gin.Context)
+	CreateAnswer(c *gin.Context)
 }
 
 type Results interface {
+	GetAll(c *gin.Context)
 }
 
 type Handler struct {
 	Middleware
 	Authorization
 	Lectures
-	Quiz
+	Quizzes
 	Results
 }
 
@@ -41,5 +48,7 @@ func New(log *slog.Logger, service *service.Service) *Handler {
 		Middleware:    NewMiddlewareHandler(service, log),
 		Authorization: NewAuthorizationHandler(service.Authorization, log),
 		Lectures:      NewLecturesHandler(service.Lectures, log),
+		Quizzes:       NewQuizzesHandler(service.Quizzes, log),
+		Results:       NewResultsHandler(service.Results, log),
 	}
 }

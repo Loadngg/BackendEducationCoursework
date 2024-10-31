@@ -50,15 +50,20 @@ func New(env string, log *slog.Logger, h *handler.Handler) *Server {
 		}
 		quizzes := api.Group("/quizzes")
 		{
-			quizzes.GET("/")
-			quizzes.GET("/:id")
+			quizzes.GET("/", h.Quizzes.GetAll)
+			quizzes.GET("/:id", h.Quizzes.GetById)
 			questions := quizzes.Group("/:id/questions")
 			{
-				questions.GET("/:question_id")
-				questions.POST("/:question_id/answers")
+				questions.GET("/", h.Quizzes.GetAllQuestions)
+				question := questions.Group("/:question_id")
+				{
+					question.GET("/", h.Quizzes.GetQuestionById)
+					question.GET("/answers", h.Quizzes.GetAllAnswers)
+					question.POST("/answers", h.Quizzes.CreateAnswer)
+				}
 			}
 		}
-		api.GET("/results")
+		api.GET("/results", h.Results.GetAll)
 	}
 
 	return s

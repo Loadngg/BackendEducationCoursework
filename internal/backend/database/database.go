@@ -16,16 +16,23 @@ type Lectures interface {
 	GetAllMaterials(lectureId string) ([]models.LectureMaterials, error)
 }
 
-type Quiz interface {
+type Quizzes interface {
+	GetAll() ([]models.Quiz, error)
+	GetById(id string) (*models.Quiz, error)
+	GetAllQuestions(id string) ([]models.QuizQuestions, error)
+	GetQuestionById(id string) (*models.QuizQuestions, error)
+	GetAllAnswers(questionId string) ([]models.Answers, error)
+	CreateAnswer(input models.UserAnswers) (int32, error)
 }
 
 type Results interface {
+	GetAll() ([]models.UserQuiz, error)
 }
 
 type Database struct {
 	Authorization
 	Lectures
-	Quiz
+	Quizzes
 	Results
 }
 
@@ -33,5 +40,7 @@ func New(db *reform.DB) *Database {
 	return &Database{
 		Authorization: NewAuthPostgres(db),
 		Lectures:      NewLecturesPostgres(db),
+		Quizzes:       NewQuizzesPostgres(db),
+		Results:       NewResultsPostgres(db),
 	}
 }

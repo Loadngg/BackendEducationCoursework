@@ -17,16 +17,23 @@ type Lectures interface {
 	GetAllMaterials(lectureId string) ([]models.LectureMaterials, error)
 }
 
-type Quiz interface {
+type Quizzes interface {
+	GetAll() ([]models.Quiz, error)
+	GetById(id string) (*models.Quiz, error)
+	GetAllQuestions(id string) ([]models.QuizQuestions, error)
+	GetQuestionById(id string) (*models.QuizQuestions, error)
+	GetAllAnswers(questionId string) ([]models.Answers, error)
+	CreateAnswer(input models.UserAnswers) (int32, error)
 }
 
 type Results interface {
+	GetAll() ([]models.UserQuiz, error)
 }
 
 type Service struct {
 	Authorization
 	Lectures
-	Quiz
+	Quizzes
 	Results
 }
 
@@ -34,5 +41,7 @@ func New(db *database.Database, salt string, signingKey string) *Service {
 	return &Service{
 		Authorization: NewAuthService(db.Authorization, salt, signingKey),
 		Lectures:      NewLecturesService(db.Lectures),
+		Quizzes:       NewQuizzesService(db.Quizzes),
+		Results:       NewResultsService(db.Results),
 	}
 }

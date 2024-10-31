@@ -49,7 +49,7 @@ func (h *MiddlewareHandler) UserIdentity(c *gin.Context) {
 	c.Set(userCtx, userId)
 }
 
-func getUserId(c *gin.Context) (int32, error) {
+func GetUserId(c *gin.Context) (int32, error) {
 	id, ok := c.Get(userCtx)
 	if !ok {
 		return 0, errors.New("user id not found")
